@@ -1,4 +1,4 @@
-multibranchPipelineJob('CKAN-build') {
+multibranchPipelineJob('OneHealthTool-build') {
     branchSources {
       branchSource {
         buildStrategies {
@@ -14,11 +14,11 @@ multibranchPipelineJob('CKAN-build') {
 
         source {
           github {
-              id('ckan_project_template')
+              id('one_health_tool')
               credentialsId('jenkins_github_api')
               repoOwner('Fjelltopp')
-              repository('ckan_project_template')
-              repositoryUrl("https://github.com/fjelltopp/ckan_project_template.git")
+              repository('one_health_tool')
+              repositoryUrl("https://github.com/fjelltopp/one_health_tool.git")
               configuredByUrl(true)
               traits {
                 gitHubTagDiscovery()
@@ -65,7 +65,7 @@ multibranchPipelineJob('CKAN-build') {
 }
 
 
-pipelineJob("CKAN-deploy") {
+pipelineJob("OneHealthTool-deploy") {
   properties {
     disableConcurrentBuilds()
   }
@@ -79,7 +79,7 @@ pipelineJob("CKAN-deploy") {
       scm {
         git {
           remote {
-            url('git@github.com:fjelltopp/ckan_project_template.git')
+            url('git@github.com:fjelltopp/one_health_tool.git')
             credentials('jenkins_github_ssh')
             name('engine')
           }
