@@ -55,6 +55,10 @@ Routes = "==1.13"
 PasteDeploy = "==2.0.1"
 watchdog = "==2.1.5"
 zope = {interface = "==4.3.2"}
+# Markupsafe and isdangerous downgraded because of dependencies issue
+markupsafe = "==2.0.1"
+itsdangerous = "==2.0.1"
+
 
 [dev-packages]
 beautifulsoup4 = "==4.9.1"
