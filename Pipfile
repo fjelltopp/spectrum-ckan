@@ -93,5 +93,10 @@ mock = "==2.0.0"
 pyfakefs = "==3.2"
 pytest-ckan = "*"
 
+
+# Install packages under active development in editable mode
+# Set tagged versions are installed in production
+# Please refer to one_health_tool/production-requirements.txt
+
 ckan = {path = "./ckan", editable = true}
 ckanext-oht = {path = "./ckanext-oht", editable = true}
