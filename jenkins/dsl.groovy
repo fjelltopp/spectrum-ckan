@@ -88,7 +88,7 @@ pipelineJob("OneHealthTool-deploy") {
             credentials('jenkins_github_ssh')
             name('origin')
           }
-          scriptPath('jenkinsfiles/ckan_deploy.groovy')
+          scriptPath('jenkinsfiles/oht_deploy.groovy')
           branch("remotes/origin/master")
         }
       }
