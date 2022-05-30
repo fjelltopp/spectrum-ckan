@@ -58,7 +58,7 @@ zope = {interface = "==4.3.2"}
 # Markupsafe and isdangerous downgraded because of dependencies issue
 markupsafe = "==2.0.1"
 itsdangerous = "==2.0.1"
-ckanext-sentry = {git = "https://github.com/fjelltopp/ckanext-sentry"}
+ckanext-sentry = {ref = "f32a1d7043e66b9bb55adf3c4c08416218bbbb18", git = "https://github.com/fjelltopp/ckanext-sentry"}
 
 [dev-packages]
 beautifulsoup4 = "==4.9.1"
