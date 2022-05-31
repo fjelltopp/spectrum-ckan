@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "944f9464b615d84ef86a91debecd5091a3eaf68b0b8082fca0e1884563d08b6d"
+            "sha256": "e60ed9b663eda35e769470b7c579ddc534842e149b27f24c32dffd6ec430b59f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -268,7 +268,7 @@
         },
         "ckanext-sentry": {
             "git": "https://github.com/fjelltopp/ckanext-sentry",
-            "ref": "f32a1d7043e66b9bb55adf3c4c08416218bbbb18"
+            "ref": "1f4a5f74c84381c6e54cdca36b6d6a595821b026"
         },
         "click": {
             "hashes": [
@@ -523,7 +523,7 @@
                 "sha256:23aab11fdbbb0f1051b93793a58323ff937e98e34aece1c4219675122e57e4ba",
                 "sha256:9a7c7e922b87db3686210cf49d5d767033a41d4010b284e747682c92bddd8b39"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "python_full_version >= '3.7.0'",
             "version": "==1.2.0"
         },
         "markdown": {
@@ -1102,11 +1102,11 @@
         },
         "waitress": {
             "hashes": [
-                "sha256:c549f5b2b4afd44d9d97d7cec79f3ef581e25d832827f415dc175327af674aa8",
-                "sha256:e2e60576cf14a1539da79f7b7ee1e79a71e64f366a0b47db54a15e971f57bb16"
+                "sha256:7500c9625927c8ec60f54377d590f67b30c8e70ef4b8894214ac6e4cad233d2a",
+                "sha256:780a4082c5fbc0fde6a2fcfe5e26e6efc1e8f425730863c04085769781f51eba"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==2.1.1"
+            "markers": "python_full_version >= '3.7.0'",
+            "version": "==2.1.2"
         },
         "watchdog": {
             "hashes": [
@@ -2655,7 +2655,7 @@
                 "sha256:4c586de507202505346f3e32d1363eb9ed6932f0c2f63184dea88983ff4971e2",
                 "sha256:d2bbd99c320a2532ac71ff6a3164867884357da3e3301f0240090c5d2fdac7ec"
             ],
-            "markers": "python_full_version >= '3.6.3' and python_full_version < '4.0.0'",
+            "markers": "python_version < '4' and python_full_version >= '3.6.3'",
             "version": "==12.4.4"
         },
         "secretstorage": {
