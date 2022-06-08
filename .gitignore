@@ -1,0 +1,7 @@
+/.idea
+/storage
+/webassets
+/venv
+.local
+.minikubevenv
+*.sublime-project
