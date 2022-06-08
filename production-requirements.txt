@@ -1,6 +1,0 @@
-# Installs desired versions of packages under active development
-# Only used in production after pipenv has been synced
-# In development these packages are installed in editable mode by pipenv
-
-ckan == 2.9.5
-ckanext-oht ==  git+https://github.com/fjelltopp/ckanext-oht.git@v0.0.1
