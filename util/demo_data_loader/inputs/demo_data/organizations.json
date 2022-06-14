@@ -1,0 +1,26 @@
+{
+  "organizations": [
+    {
+      "users": [
+        {
+          "name": "fjelltopp_admin",
+          "capacity": "admin"
+        },
+        {
+          "name": "fjelltopp_editor",
+          "capacity": "editor"
+        },
+        {
+          "name": "test_editor",
+          "capacity": "editor"
+        }
+      ],
+      "display_name": "Spectrum",
+      "description": "Spectrum demo data organization",
+      "image_url": "https://www.fjelltopp.org/templates/fjelltopp/images/navbar.png",
+      "name": "spectrum",
+      "state": "active",
+      "title": "Spectrum"
+    }
+  ]
+}
