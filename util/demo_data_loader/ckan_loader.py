@@ -290,14 +290,13 @@ def _load_documents():
                     'title': row[2],
                     'name': _create_name(row[2]),
                     'file': row[3],
-                    'program': row[5],
-                    'category': _create_name(row[6]),
-                    'created': row[7],
-                    'year': str(row[8]),
-                    'owner_org': _create_name(row[5]),
+                    'start_year': row[5],
+                    'end_year': row[6],
+                    'country': row[7],
+                    'notes': str(row[8]),
                     'tags': _create_tags(row[9]),
                     'dataset': row[10],
-                    'dataset_name': _create_name(row[10])
+                    'dataset_name': row[11]
                 }
                 if len(row[9]) > 0:
                     document['tags'] = []
