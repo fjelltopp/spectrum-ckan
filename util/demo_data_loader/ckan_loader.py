@@ -132,19 +132,9 @@ def load_resources(ckan, documents):
             'package_id': document['dataset_name']
         }
 
-        file_id = os.path.splitext(document['file'])[0]
-        file_ext = os.path.splitext(document['file'])[1]
+        file_path = os.path.join(RESOURCE_FOLDER, document['file'])
 
-        resource_dict['format'] = re.sub('[/.]', '', file_ext).upper()
-
-        file_path = os.path.join(RESOURCE_FOLDER, file_id, document['file'])
-
-        if zipfile.is_zipfile(file_path) and file_ext == '.zip':
-            _unpack_zip(ckan, file_path, resource_dict)
-        elif rarfile.is_rarfile(file_path) and file_ext == '.rar':
-            _unpack_rar(ckan, file_path, resource_dict)
-        else:
-            _upload_resource(ckan, file_path, resource_dict)
+        _upload_resource(ckan, file_path, resource_dict)
 
 
 def load_groups(ckan, documents):
