@@ -96,6 +96,10 @@ def load_datasets(ckan, documents):
                 'title': _create_title(document['dataset']),
                 'name': document['dataset_name'],
                 'owner_org': 'spectrum',
+                'start_year': document['start_year'],
+                'end_year': document['end_year'],
+                'country': document['country'],
+                'notes': document['notes'],
                 'tags': document['tags']
             }
 
