@@ -286,7 +286,7 @@ def _load_documents():
                 document = {
                     'title': row[2],
                     'name': _create_name(row[2]),
-                    'file': row[3],
+                    'file': row[4],
                     'start_year': row[5],
                     'end_year': row[6],
                     'country': row[7],
