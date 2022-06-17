@@ -96,11 +96,13 @@ def load_datasets(ckan, documents):
                 'title': _create_title(document['dataset']),
                 'name': document['dataset_name'],
                 'owner_org': 'spectrum',
-                'start_year': document['start_year'],
-                'end_year': document['end_year'],
-                'country': document['country'],
                 'notes': document['notes'],
-                'tags': document['tags']
+                'tags': document['tags'],
+                'extras': [
+                    {'key': 'start_year', 'value': str(document['start_year'])},
+                    {'key': 'end_year', 'value': str(document['end_year'])},
+                    {'key': 'country_code', 'value': document['country_code']}
+                ]
             }
 
             ckan.action.package_create(**dataset)
@@ -283,7 +285,7 @@ def _load_documents():
                     'file': row[4],
                     'start_year': row[5],
                     'end_year': row[6],
-                    'country': row[7],
+                    'country_code': row[7],
                     'notes': str(row[8]),
                     'tags': _create_tags(row[9]),
                     'dataset': row[10],
