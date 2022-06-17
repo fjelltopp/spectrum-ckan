@@ -161,7 +161,7 @@ def load_data(ckan_url, ckan_api_key):
 
     # use user specific api keys
     for user in created_users:
-        ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key'])
+        ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key']['token'])
         user_documents = [d for d in documents if d['user'] == user['name']]
         load_datasets(ckan, user_documents)
         load_resources(ckan, user_documents)
