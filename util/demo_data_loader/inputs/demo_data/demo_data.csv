@@ -1,4 +1,4 @@
 CKAN metadata,,,,,,,,,,,
-,logi_id,Title,Format,File name,Start Year,End Year,Country code,Notes,,Dataset,Dataset name
-,1,DP1,JSON,demo1.json,1970,2022,USA,These are some notes,"draft,test",Ghana OHT Projection 1,ghana-oht-projection-1
-,2,DP2,JSON,demo2.json,1970,2022,USA,These are some more notes,"draft,test",Ghana OHT Projection 2,ghana-oht-projection-2
+,logi_id,Title,Format,File name,Start Year,End Year,Country code,Notes,Tags,Dataset,Dataset name,user
+,1,DP1,JSON,demo1.json,1970,2022,USA,These are some notes,"draft,test",Ghana OHT Projection 1,ghana-oht-projection-1,fjelltopp_editor
+,2,DP2,JSON,demo2.json,1970,2022,USA,These are some more notes,"draft,test",Ghana OHT Projection 2,ghana-oht-projection-2,test_editor
