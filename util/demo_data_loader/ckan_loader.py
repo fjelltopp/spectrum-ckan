@@ -99,11 +99,9 @@ def load_datasets(ckan, documents):
                 'owner_org': 'spectrum',
                 'notes': document['notes'],
                 'tags': document['tags'],
-                'extras': [
-                    {'key': 'start_year', 'value': str(document['start_year'])},
-                    {'key': 'end_year', 'value': str(document['end_year'])},
-                    {'key': 'country_code', 'value': document['country_code']}
-                ]
+                'start_year': str(document['start_year']),
+                'end_year': str(document['end_year']),
+                'country_code': document['country_code']
             }
 
             ckan.action.package_create(**dataset)
