@@ -66,20 +66,28 @@ def load_users(ckan):
     """
     with open(USERS_FILE, 'r') as users_file:
         users = json.load(users_file)['users']
+        created_users = []
         for user in users:
             try:
-                ckan.action.user_create(**user)
+                new_user = ckan.action.user_create(**user)
+                created_users = new_user
+                api_key = ckan.action.api_token_create(id=new_user['id'], name='demo_data_upload')
+                new_user['api_key'] = api_key
                 log.info(f"Created user {user['name']}")
                 continue
             except ckanapi.errors.ValidationError as e:
                 pass  # fallback to user update
             try:
                 log.warning(f"User {user['name']} might already exists. Will try to update.")
-                id = ckan.action.user_show(id=user['name'])['id']
-                ckan.action.user_update(id=id, **user)
+                update_user = ckan.action.user_show(id=user['name'])['id']
+                user_id = update_user['id']
+                ckan.action.user_update(id=user_id, **user)
+                api_key = ckan.action.api_token_create(id=new_user['id'], name='demo_data_upload')
+                update_user['api_key'] = api_key
                 log.info(f"Updated user {user['name']}")
             except ckanapi.errors.ValidationError as e:
                 log.error(f"Can't create user {user['name']}: {e.error_dict}")
+    return created_users
 
 
 def load_datasets(ckan, documents):
@@ -147,10 +155,15 @@ def load_data(ckan_url, ckan_api_key):
 
     documents = _load_documents()
 
-    load_users(ckan)
+    created_users = load_users(ckan)
     load_organizations(ckan)
-    load_datasets(ckan, documents)
-    load_resources(ckan, documents)
+
+    # use user specific api keys
+    for user in created_users:
+        ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key'])
+        user_documents = [d for d in documents if d['user'] == user]
+        load_datasets(ckan, user_documents)
+        load_resources(ckan, user_documents)
 
 
 def _create_name(title):
@@ -255,7 +268,8 @@ def _load_documents():
                     'notes': str(row[8]),
                     'tags': _create_tags(row[9]),
                     'dataset': row[10],
-                    'dataset_name': row[11]
+                    'dataset_name': row[11],
+                    'user': row[12]
                 }
                 if len(row[9]) > 0:
                     document['tags'] = []
