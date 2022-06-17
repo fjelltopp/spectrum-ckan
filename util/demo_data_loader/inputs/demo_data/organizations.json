@@ -3,10 +3,6 @@
     {
       "users": [
         {
-          "name": "fjelltopp_admin",
-          "capacity": "admin"
-        },
-        {
           "name": "fjelltopp_editor",
           "capacity": "editor"
         },

@@ -1,16 +1,6 @@
 {
   "users": [
     {
-      "email": "fjelltopp_admin@fjelltopp.org",
-      "about": null,
-      "display_name": "Fjelltopp Admin",
-      "name": "fjelltopp_admin",
-      "password": "fjelltopp",
-      "activity_streams_email_notifications": false,
-      "state": "active",
-      "fullname": "Fjelltopp Admin"
-    },
-    {
       "email": "fjelltopp_editor@fjelltopp.org",
       "about": null,
       "display_name": "Fjelltopp Editor",
