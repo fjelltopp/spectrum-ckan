@@ -64,26 +64,27 @@ def load_users(ckan):
     :param ckan: ckanapi instance
     :return: None
     """
+    created_users = []
     with open(USERS_FILE, 'r') as users_file:
         users = json.load(users_file)['users']
-        created_users = []
         for user in users:
             try:
                 new_user = ckan.action.user_create(**user)
-                created_users = new_user
                 api_key = ckan.action.api_token_create(id=new_user['id'], name='demo_data_upload')
                 new_user['api_key'] = api_key
+                created_users.append(new_user)
                 log.info(f"Created user {user['name']}")
                 continue
             except ckanapi.errors.ValidationError as e:
                 pass  # fallback to user update
             try:
                 log.warning(f"User {user['name']} might already exists. Will try to update.")
-                update_user = ckan.action.user_show(id=user['name'])['id']
+                update_user = ckan.action.user_show(id=user['name'])
                 user_id = update_user['id']
                 ckan.action.user_update(id=user_id, **user)
-                api_key = ckan.action.api_token_create(id=new_user['id'], name='demo_data_upload')
+                api_key = ckan.action.api_token_create(user=user_id, name='demo_data_upload')
                 update_user['api_key'] = api_key
+                created_users.append(update_user)
                 log.info(f"Updated user {user['name']}")
             except ckanapi.errors.ValidationError as e:
                 log.error(f"Can't create user {user['name']}: {e.error_dict}")
@@ -161,7 +162,7 @@ def load_data(ckan_url, ckan_api_key):
     # use user specific api keys
     for user in created_users:
         ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key'])
-        user_documents = [d for d in documents if d['user'] == user]
+        user_documents = [d for d in documents if d['user'] == user['name']]
         load_datasets(ckan, user_documents)
         load_resources(ckan, user_documents)
 
@@ -290,4 +291,3 @@ if __name__ == '__main__':
         load_data(ckan_url=CONFIG['ckan_url'], ckan_api_key=CONFIG['ckan_api_key'])
     except AssertionError as e:
         log.error('CKAN api key missing from config.json')
-
