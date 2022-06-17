@@ -95,6 +95,7 @@ def load_datasets(ckan, documents):
             dataset = {
                 'title': _create_title(document['dataset']),
                 'name': document['dataset_name'],
+                'type': 'oht',
                 'owner_org': 'spectrum',
                 'notes': document['notes'],
                 'tags': document['tags'],
