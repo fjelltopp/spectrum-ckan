@@ -144,46 +144,13 @@ def load_resources(ckan, documents):
         _upload_resource(ckan, file_path, resource_dict)
 
 
-def load_groups(ckan, documents):
-    """
-    Helper method to load groups from the GROUPS_FILE config file
-    :param ckan: ckanapi instance
-    :return: None
-    """
-    group_ids_dict = {}
-
-    with open(GROUPS_FILE, 'r') as groups_file:
-        groups = json.load(groups_file)['groups']
-
-        for group in groups:
-            group_name = group['name']
-            try:
-                org = ckan.action.group_create(**group)
-                log.info(f"Created group {group_name}")
-                group_ids_dict[group_name] = org["id"]
-                continue
-            except ckanapi.errors.ValidationError as e:
-                pass  # fallback to group update
-            try:
-                log.warning(f"Group {group_name} might already exists. Will try to update.")
-                group_id = ckan.action.group_show(id=group_name)['id']
-                ckan.action.group_update(id=group_id, **group)
-                group_ids_dict[group_name] = group_id
-                log.info(f"Updated group {group_name}")
-            except ckanapi.errors.ValidationError as e:
-                log.error(f"Can't create group {group_name}: {e.error_dict}")
-
-    return group_ids_dict
-
-
 def load_data(ckan_url, ckan_api_key):
     ckan = ckanapi.RemoteCKAN(ckan_url, apikey=ckan_api_key)
 
     documents = _load_documents()
 
     load_users(ckan)
-    orgs = load_organizations(ckan)
-    load_groups(ckan, documents)
+    load_organizations(ckan)
     load_datasets(ckan, documents)
     load_resources(ckan, documents)
 
