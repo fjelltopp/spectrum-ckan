@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "email": "fjelltopp_editor@fjelltopp.org",
+      "about": null,
+      "display_name": "Fjelltopp Editor",
+      "name": "fjelltopp_editor",
+      "password": "fjelltopp",
+      "activity_streams_email_notifications": false,
+      "state": "active",
+      "fullname": "Fjelltopp Editor"
+    },
+    {
+      "email": "test_editor@test.org",
+      "about": null,
+      "display_name": "Test Editor",
+      "name": "test_editor",
+      "password": "fjelltopp",
+      "activity_streams_email_notifications": false,
+      "state": "active",
+      "fullname": "Test Editor"
+    }
+  ]
+}
