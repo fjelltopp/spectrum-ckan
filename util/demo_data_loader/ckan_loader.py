@@ -21,8 +21,7 @@ with open(CONFIG_PATH, 'r') as config_file:
 DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG['data_path'])
 USERS_FILE = os.path.join(DATA_PATH, 'users.json')
 ORGANIZATIONS_FILE = os.path.join(DATA_PATH, 'organizations.json')
-DOCUMENTS_FILE = os.path.join(DATA_PATH, CONFIG['documents_file'])
-GROUPS_FILE = os.path.join(DATA_PATH, CONFIG['groups_file'])
+RESOURCES_FILE = os.path.join(DATA_PATH, CONFIG['resources_file'])
 RESOURCE_FOLDER = os.path.join(DATA_PATH, CONFIG['resource_folder'])
 
 log = logging.getLogger(__name__)
@@ -91,26 +90,27 @@ def load_users(ckan):
     return created_users
 
 
-def load_datasets(ckan, documents):
+def load_datasets(ckan, resources):
     """
-    Helper method to load datasets from the DOCUMENTS_FILE config file
+    Helper method to load datasets from the RESOURCES_FILE config file
     :param ckan: ckanapi instance
-    :param documents: a list of documents built from the metadata import file
+    :param resources: a list of resources built from the metadata import file
     :return: None
     """
 
-    for document in documents:
+    for resource in resources:
         try:
             dataset = {
-                'title': _create_title(document['dataset']),
-                'name': document['dataset_name'],
+                'title': _create_title(resource['dataset']),
+                'name': resource['dataset_name'],
                 'type': 'oht',
                 'owner_org': 'spectrum',
-                'notes': document['notes'],
-                'tags': document['tags'],
-                'start_year': str(document['start_year']),
-                'end_year': str(document['end_year']),
-                'country_code': document['country_code']
+                'private': True,
+                'notes': resource['notes'],
+                'tags': resource['tags'],
+                'start_year': str(resource['start_year']),
+                'end_year': str(resource['end_year']),
+                'country_code': resource['country_code']
             }
 
             ckan.action.package_create(**dataset)
@@ -127,44 +127,42 @@ def load_datasets(ckan, documents):
             log.error(f"Can't create dataset {dataset['name']}: {e.error_dict}")
 
 
-def load_resources(ckan, documents):
+def load_resources(ckan, resources):
     """
-    Helper method to load resources from the DOCUMENTS_FILE config file
+    Helper method to load resources from the RESOURCES_FILE config file
     :param ckan: ckanapi instance
-    :param documents: a list of documents built from the metadata import file
+    :param resources: a list of resources built from the metadata import file
     :return: None
     """
-    for document in documents:
-        if len(document['file']) < 1:
+    for resource in resources:
+        if len(resource['file']) < 1:
             log.warning(f"Resource {resource_dict['name']} not created as it has no file attachment")
             continue
 
         resource_dict = {
-            'title': document['title'],
-            'name': document['name'],
+            'title': resource['title'],
+            'name': resource['name'],
             'url': 'upload',
-            'package_id': document['dataset_name']
+            'package_id': resource['dataset_name']
         }
 
-        file_path = os.path.join(RESOURCE_FOLDER, document['file'])
+        file_path = os.path.join(RESOURCE_FOLDER, resource['file'])
 
         _upload_resource(ckan, file_path, resource_dict)
 
 
 def load_data(ckan_url, ckan_api_key):
     ckan = ckanapi.RemoteCKAN(ckan_url, apikey=ckan_api_key)
-
-    documents = _load_documents()
-
+    resources = _prepare_resource_data()
     created_users = load_users(ckan)
     load_organizations(ckan)
 
     # use user specific api keys
     for user in created_users:
         ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key']['token'])
-        user_documents = [d for d in documents if d['user'] == user['name']]
-        load_datasets(ckan, user_documents)
-        load_resources(ckan, user_documents)
+        user_resources = [d for d in resources if d['user'] == user['name']]
+        load_datasets(ckan, user_resources)
+        load_resources(ckan, user_resources)
 
 
 def _create_name(title):
@@ -252,14 +250,14 @@ def _create_tags(tags_str):
     return [{"name": tag} for tag in tag_names]
 
 
-def _load_documents():
-    with open(DOCUMENTS_FILE) as csvfile:
+def _prepare_resource_data():
+    with open(RESOURCES_FILE) as csvfile:
         metadata_reader = csv.reader(csvfile)
         start_table = False
-        documents = []
+        resources = []
         for row in metadata_reader:
             if start_table:
-                document = {
+                resource = {
                     'title': row[2],
                     'name': _create_name(row[2]),
                     'file': row[4],
@@ -273,16 +271,16 @@ def _load_documents():
                     'user': row[12]
                 }
                 if len(row[9]) > 0:
-                    document['tags'] = []
+                    resource['tags'] = []
                     tags = row[9].split(',')
                     for tag in tags:
                         re.sub('[^a-zA-Z0-9_/\- .]', '-', tag)
-                        document['tags'].append({'name': tag})
+                        resource['tags'].append({'name': tag})
 
-                documents.append(document)
+                resources.append(resource)
             if row[1] == 'logi_id':
                 start_table = True
-        return documents
+        return resources
 
 
 if __name__ == '__main__':
