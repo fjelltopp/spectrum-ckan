@@ -108,9 +108,11 @@ def load_datasets(ckan, resources):
                 'private': True,
                 'notes': resource['notes'],
                 'tags': resource['tags'],
-                'start_year': str(resource['start_year']),
-                'end_year': str(resource['end_year']),
-                'country_code': resource['country_code']
+                'first_year': str(resource['first_year']),
+                'final_year': str(resource['final_year']),
+                'country_name': resource['country_name'],
+                'country_iso3_alpha': resource['country_iso3_alpha'],
+                'country_iso3_num': resource['country_iso3_num'],
             }
 
             ckan.action.package_create(**dataset)
@@ -140,8 +142,7 @@ def load_resources(ckan, resources):
             continue
 
         resource_dict = {
-            'title': resource['title'],
-            'name': resource['name'],
+            'name': resource['title'],
             'url': 'upload',
             'package_id': resource['dataset_name']
         }
@@ -198,51 +199,6 @@ def _upload_resource(ckan, file_path, resource_dict):
         log.error(f"Can't create resource {resource_dict['name']}: {e.error_dict}")
 
 
-def _unpack_zip(ckan, file_path, resource_dict):
-    extract_folder = os.path.join(DATA_PATH, 'tmp')
-    if not os.path.exists(extract_folder):
-        os.makedirs(extract_folder)
-
-    try:
-        with zipfile.ZipFile(file_path) as zf:
-            zf.extractall(extract_folder)
-            files = zf.namelist()
-            for filename in files:
-                title = os.path.splitext(filename)[0]
-                resource_dict['title'] = title
-                resource_dict['name'] = _create_name(title)
-                resource_dict['format'] = re.sub('[/.]', '', os.path.splitext(filename)[1]).upper()
-                extracted_file_path = os.path.join(extract_folder, filename)
-                _upload_resource(ckan, extracted_file_path, resource_dict)
-    except Exception as e:
-        log.error(str(e))
-    finally:
-        shutil.rmtree(extract_folder)
-
-
-def _unpack_rar(ckan, file_path, resource_dict):
-    extract_folder = os.path.join(DATA_PATH, 'tmp')
-    if not os.path.exists(extract_folder):
-        os.makedirs(extract_folder)
-
-    try:
-        with rarfile.RarFile(file_path) as rf:
-            rf.extractall(extract_folder)
-            files = rf.namelist()
-            for filename in files:
-                title = os.path.splitext(filename)[0]
-                resource_dict['title'] = title
-                resource_dict['name'] = _create_name(title)
-                resource_dict['format'] = re.sub('[/.]', '', os.path.splitext(filename)[1]).upper()
-                extracted_file_path = os.path.join(extract_folder, filename)
-                if not os.path.isdir(extracted_file_path):
-                    _upload_resource(ckan, extracted_file_path, resource_dict)
-    except Exception as e:
-        log.error(str(e))
-    finally:
-        shutil.rmtree(extract_folder)
-
-
 def _create_tags(tags_str):
     if not tags_str.strip():
         return []
@@ -261,9 +217,11 @@ def _prepare_resource_data():
                     'title': row[2],
                     'name': _create_name(row[2]),
                     'file': row[4],
-                    'start_year': row[5],
-                    'end_year': row[6],
-                    'country_code': row[7],
+                    'first_year': row[5],
+                    'final_year': row[6],
+                    'country_name': row[7],
+                    'country_iso3_alpha': row[7],
+                    'country_iso3_num': row[7],
                     'notes': str(row[8]),
                     'tags': _create_tags(row[9]),
                     'dataset': row[10],
