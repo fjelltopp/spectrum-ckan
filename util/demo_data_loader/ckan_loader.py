@@ -143,6 +143,7 @@ def load_resources(ckan, resources):
 
         resource_dict = {
             'name': resource['title'],
+            'format': resource['format'],
             'url': 'upload',
             'package_id': resource['dataset_name']
         }
@@ -189,13 +190,6 @@ def _upload_resource(ckan, file_path, resource_dict):
         log.info(f"Created resource {resource_dict['name']}")
         return
     except ckanapi.errors.ValidationError as e:
-        pass  # fallback to resource update
-    try:
-        log.warning(f"Resource {resource_dict['name']} might already exists. Will try to update.")
-        id = ckan.action.resource_show(id=resource_dict['name'])['id']
-        ckan.action.resource_update(id=id, **resource_dict)
-        log.info(f"Updated resource {resource_dict['name']}")
-    except ckanapi.errors.ValidationError as e:
         log.error(f"Can't create resource {resource_dict['name']}: {e.error_dict}")
 
 
@@ -215,22 +209,22 @@ def _prepare_resource_data():
             if start_table:
                 resource = {
                     'title': row[2],
-                    'name': _create_name(row[2]),
+                    'format': row[3],
                     'file': row[4],
                     'first_year': row[5],
                     'final_year': row[6],
-                    'country_name': row[7],
+                    'country_name': row[9],
                     'country_iso3_alpha': row[7],
-                    'country_iso3_num': row[7],
-                    'notes': str(row[8]),
-                    'tags': _create_tags(row[9]),
-                    'dataset': row[10],
-                    'dataset_name': row[11],
-                    'user': row[12]
+                    'country_iso3_num': row[8],
+                    'notes': str(row[10]),
+                    'tags': _create_tags(row[11]),
+                    'dataset': row[12],
+                    'dataset_name': _create_name(row[12]),
+                    'user': row[13]
                 }
-                if len(row[9]) > 0:
+                if len(row[11]) > 0:
                     resource['tags'] = []
-                    tags = row[9].split(',')
+                    tags = row[11].split(',')
                     for tag in tags:
                         re.sub('[^a-zA-Z0-9_/\- .]', '-', tag)
                         resource['tags'].append({'name': tag})
