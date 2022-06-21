@@ -108,9 +108,11 @@ def load_datasets(ckan, resources):
                 'private': True,
                 'notes': resource['notes'],
                 'tags': resource['tags'],
-                'start_year': str(resource['start_year']),
-                'end_year': str(resource['end_year']),
-                'country_code': resource['country_code']
+                'first_year': str(resource['first_year']),
+                'final_year': str(resource['final_year']),
+                'country_name': resource['country_name'],
+                'country_iso3_alpha': resource['country_iso3_alpha'],
+                'country_iso3_num': resource['country_iso3_num'],
             }
 
             ckan.action.package_create(**dataset)
@@ -140,8 +142,8 @@ def load_resources(ckan, resources):
             continue
 
         resource_dict = {
-            'title': resource['title'],
-            'name': resource['name'],
+            'name': resource['title'],
+            'format': resource['format'],
             'url': 'upload',
             'package_id': resource['dataset_name']
         }
@@ -188,59 +190,7 @@ def _upload_resource(ckan, file_path, resource_dict):
         log.info(f"Created resource {resource_dict['name']}")
         return
     except ckanapi.errors.ValidationError as e:
-        pass  # fallback to resource update
-    try:
-        log.warning(f"Resource {resource_dict['name']} might already exists. Will try to update.")
-        id = ckan.action.resource_show(id=resource_dict['name'])['id']
-        ckan.action.resource_update(id=id, **resource_dict)
-        log.info(f"Updated resource {resource_dict['name']}")
-    except ckanapi.errors.ValidationError as e:
         log.error(f"Can't create resource {resource_dict['name']}: {e.error_dict}")
-
-
-def _unpack_zip(ckan, file_path, resource_dict):
-    extract_folder = os.path.join(DATA_PATH, 'tmp')
-    if not os.path.exists(extract_folder):
-        os.makedirs(extract_folder)
-
-    try:
-        with zipfile.ZipFile(file_path) as zf:
-            zf.extractall(extract_folder)
-            files = zf.namelist()
-            for filename in files:
-                title = os.path.splitext(filename)[0]
-                resource_dict['title'] = title
-                resource_dict['name'] = _create_name(title)
-                resource_dict['format'] = re.sub('[/.]', '', os.path.splitext(filename)[1]).upper()
-                extracted_file_path = os.path.join(extract_folder, filename)
-                _upload_resource(ckan, extracted_file_path, resource_dict)
-    except Exception as e:
-        log.error(str(e))
-    finally:
-        shutil.rmtree(extract_folder)
-
-
-def _unpack_rar(ckan, file_path, resource_dict):
-    extract_folder = os.path.join(DATA_PATH, 'tmp')
-    if not os.path.exists(extract_folder):
-        os.makedirs(extract_folder)
-
-    try:
-        with rarfile.RarFile(file_path) as rf:
-            rf.extractall(extract_folder)
-            files = rf.namelist()
-            for filename in files:
-                title = os.path.splitext(filename)[0]
-                resource_dict['title'] = title
-                resource_dict['name'] = _create_name(title)
-                resource_dict['format'] = re.sub('[/.]', '', os.path.splitext(filename)[1]).upper()
-                extracted_file_path = os.path.join(extract_folder, filename)
-                if not os.path.isdir(extracted_file_path):
-                    _upload_resource(ckan, extracted_file_path, resource_dict)
-    except Exception as e:
-        log.error(str(e))
-    finally:
-        shutil.rmtree(extract_folder)
 
 
 def _create_tags(tags_str):
@@ -259,20 +209,22 @@ def _prepare_resource_data():
             if start_table:
                 resource = {
                     'title': row[2],
-                    'name': _create_name(row[2]),
+                    'format': row[3],
                     'file': row[4],
-                    'start_year': row[5],
-                    'end_year': row[6],
-                    'country_code': row[7],
-                    'notes': str(row[8]),
-                    'tags': _create_tags(row[9]),
-                    'dataset': row[10],
-                    'dataset_name': row[11],
-                    'user': row[12]
+                    'first_year': row[5],
+                    'final_year': row[6],
+                    'country_name': row[9],
+                    'country_iso3_alpha': row[7],
+                    'country_iso3_num': row[8],
+                    'notes': str(row[10]),
+                    'tags': _create_tags(row[11]),
+                    'dataset': row[12],
+                    'dataset_name': _create_name(row[12]),
+                    'user': row[13]
                 }
-                if len(row[9]) > 0:
+                if len(row[11]) > 0:
                     resource['tags'] = []
-                    tags = row[9].split(',')
+                    tags = row[11].split(',')
                     for tag in tags:
                         re.sub('[^a-zA-Z0-9_/\- .]', '-', tag)
                         resource['tags'].append({'name': tag})
