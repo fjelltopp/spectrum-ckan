@@ -2,14 +2,9 @@ import json
 import logging
 import os
 import re
-
+import requests
 import ckanapi
-
 import csv
-import zipfile
-import rarfile
-import shutil
-
 import slugify
 
 CONFIG_FILENAME = os.getenv('CONFIG_FILENAME', 'config.json')
@@ -69,8 +64,6 @@ def load_users(ckan):
         for user in users:
             try:
                 new_user = ckan.action.user_create(**user)
-                api_key = ckan.action.api_token_create(id=new_user['id'], name='demo_data_upload')
-                new_user['api_key'] = api_key
                 created_users.append(new_user)
                 log.info(f"Created user {user['name']}")
                 continue
@@ -81,8 +74,6 @@ def load_users(ckan):
                 update_user = ckan.action.user_show(id=user['name'])
                 user_id = update_user['id']
                 ckan.action.user_update(id=user_id, **user)
-                api_key = ckan.action.api_token_create(user=user_id, name='demo_data_upload')
-                update_user['api_key'] = api_key
                 created_users.append(update_user)
                 log.info(f"Updated user {user['name']}")
             except ckanapi.errors.ValidationError as e:
@@ -161,7 +152,9 @@ def load_data(ckan_url, ckan_api_key):
 
     # use user specific api keys
     for user in created_users:
-        ckan = ckanapi.RemoteCKAN(ckan_url, apikey=user['api_key']['token'])
+        session = requests.Session()
+        session.headers.update({'CKAN-Substitute-user': user['name']})
+        ckan = ckanapi.RemoteCKAN(ckan_url, apikey=ckan_api_key, session=session)
         user_resources = [d for d in resources if d['user'] == user['name']]
         load_datasets(ckan, user_resources)
         load_resources(ckan, user_resources)
