@@ -3,10 +3,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
 python_version = "3.8"
-
 
 [packages]
 alembic = "==1.0.0"
@@ -64,14 +62,12 @@ ckanext-authz-service = {editable = true, ref = "bd4c80f55a714c1117a0e130d07463e
 ckanext-blob-storage = {editable = true, ref = "5b2f59217e8f88a3f2cdb9dc50bf4099d9abe0de", git = "https://github.com/fjelltopp/ckanext-blob-storage"}
 ckanext-scheming = {editable = true, git = "https://github.com/ckan/ckanext-scheming.git"}
 ckanext-emailasusername = "==1.1.0"
-
 # Markupsafe and isdangerous downgraded because of dependencies issue
 markupsafe = "==2.0.1"
 itsdangerous = "==2.0.1"
-
 # Install packages under active development in editable mode
 ckan = {path = "./ckan", editable = true}
-ckanext-oht = {path = "./ckanext-oht", editable = true}
+ckanext-spectrum = {path = "./ckanext-spectrum", editable = true}
 
 [dev-packages]
 beautifulsoup4 = "==4.9.1"
