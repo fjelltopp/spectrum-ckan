@@ -1,7 +1,9 @@
-# One Health Tool (OHT) CKAN Instance
+# Spectrum CKAN Instance
 
-This is the master repo for the CKAN instance used to store data from Avenir Health's 
-[One Health Tool (OHT)](https://www.avenirhealth.org/software-onehealth.php).
+This is the master repo for the Spectrum CKAN instance used to store data from SpectrumWeb
+developed by Avenir Health.  This work was funded as part of the work to migrate the
+[OneHealth](https://www.avenirhealth.org/software-onehealth.php) tool to the web.
+
 
 As OHT moves from the desktop to the cloud, Avenir Health has commissioned Fjelltopp to 
 implement a CKAN instance to store and manage data in the back end. It is envisaged that 
