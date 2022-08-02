@@ -1,4 +1,4 @@
-multibranchPipelineJob('OneHealthTool-build') {
+multibranchPipelineJob('SpectrumCkan-build') {
     branchSources {
       branchSource {
         buildStrategies {
@@ -65,7 +65,7 @@ multibranchPipelineJob('OneHealthTool-build') {
 }
 
 
-pipelineJob("OneHealthTool-deploy") {
+pipelineJob("SpectrumCkan-deploy") {
   properties {
     disableConcurrentBuilds()
   }
