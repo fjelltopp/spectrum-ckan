@@ -14,11 +14,11 @@ multibranchPipelineJob('OneHealthTool-build') {
 
         source {
           github {
-              id('one_health_tool')
+              id('spectrum-ckan')
               credentialsId('jenkins_github_api')
               repoOwner('Fjelltopp')
-              repository('one_health_tool')
-              repositoryUrl("https://github.com/fjelltopp/one_health_tool.git")
+              repository('spectrum-ckan')
+              repositoryUrl("https://github.com/fjelltopp/spectrum-ckan.git")
               configuredByUrl(true)
               traits {
                 gitHubTagDiscovery()
@@ -79,7 +79,7 @@ pipelineJob("OneHealthTool-deploy") {
       scm {
         git {
           remote {
-            url('git@github.com:fjelltopp/one_health_tool.git')
+            url('git@github.com:fjelltopp/spectrum-ckan.git')
             credentials('jenkins_github_ssh')
             name('engine')
           }
@@ -88,7 +88,7 @@ pipelineJob("OneHealthTool-deploy") {
             credentials('jenkins_github_ssh')
             name('origin')
           }
-          scriptPath('jenkinsfiles/oht_deploy.groovy')
+          scriptPath('jenkinsfiles/spc_deploy.groovy')
           branch("remotes/origin/master")
         }
       }
