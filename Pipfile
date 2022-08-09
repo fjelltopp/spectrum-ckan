@@ -60,7 +60,7 @@ zope = {interface = "==4.3.2"}
 ckanext-sentry = {ref = "0.1.0", git = "https://github.com/fjelltopp/ckanext-sentry"}
 ckanext-authz-service = {editable = true, ref = "bd4c80f55a714c1117a0e130d07463e383c494c7", git = "https://github.com/datopian/ckanext-authz-service"}
 ckanext-blob-storage = {editable = true, ref = "5b2f59217e8f88a3f2cdb9dc50bf4099d9abe0de", git = "https://github.com/fjelltopp/ckanext-blob-storage"}
-ckanext-scheming = {editable = true, git = "https://github.com/ckan/ckanext-scheming.git"}
+ckanext-scheming = {editable = true, ref = "899a3bce5f5ac05bd4e612213ec9138b536f3076", git = "https://github.com/ckan/ckanext-scheming.git"}
 ckanext-emailasusername = "==1.1.0"
 # Markupsafe and isdangerous downgraded because of dependencies issue
 markupsafe = "==2.0.1"
@@ -97,3 +97,5 @@ twine = "*"
 mock = "==2.0.0"
 pyfakefs = "==3.2"
 pytest-ckan = "*"
+requests = "*"
+zxcvbn = "*"
