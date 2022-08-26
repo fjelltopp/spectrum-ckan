@@ -4,3 +4,6 @@
 [submodule "ckanext-spectrum"]
 	path = ckanext-spectrum
 	url = git@github.com:fjelltopp/ckanext-spectrum.git
+[submodule "ckanext-emailasusername"]
+	path = ckanext-emailasusername
+	url = git@github.com:fjelltopp/ckanext-emailasusername
