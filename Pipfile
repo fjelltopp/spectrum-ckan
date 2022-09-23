@@ -67,7 +67,6 @@ itsdangerous = "==2.0.1"
 # Install packages under active development in editable mode
 ckan = {path = "./ckan", editable = true}
 ckanext-spectrum = {path = "./ckanext-spectrum", editable = true}
-ckanext-emailasusername = {path = "./ckanext-emailasusername", editable = true}
 
 
 [dev-packages]
