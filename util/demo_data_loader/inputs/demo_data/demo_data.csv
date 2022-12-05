@@ -1,14 +1,14 @@
 CKAN metadata,,,,,,,,,,,,,
 ,logi_id,Title,Format,File name,Start Year,End Year,Country ISO3 Alpha,Country ISO3 Numeric,Country Name,Notes,Tags,Dataset,user
-,1,PJ,JSON,PJ.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,2,AM,JSON,AM.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,3,DP,JSON,DP.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,4,FP,JSON,FP.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,5,GB,JSON,GB.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,6,OH,JSON,OH.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin OHT Projection,fjelltopp_editor
-,7,PJ,JSON,PJ.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
-,8,AM,JSON,AM.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
-,9,DP,JSON,DP.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
-,10,FP,JSON,FP.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
-,11,GB,JSON,GB.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
-,12,OH,JSON,OH.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana OHT Projection,test_editor
+,1,PJ,JSON,PJ.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,2,AM,JSON,AM.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,3,DP,JSON,DP.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,4,FP,JSON,FP.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,5,GB,JSON,GB.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,6,OH,JSON,OH.JSON,1970,2030,BEN,204,Benin,These are some notes,"draft,test",Benin IHT Projection,fjelltopp_editor
+,7,PJ,JSON,PJ.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor
+,8,AM,JSON,AM.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor
+,9,DP,JSON,DP.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor
+,10,FP,JSON,FP.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor
+,11,GB,JSON,GB.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor
+,12,OH,JSON,OH.JSON,1970,2030,GHA,288,Ghana,These are some notes,"draft,test",Ghana IHT Projection,test_editor

@@ -1,10 +1,11 @@
+import csv
 import json
 import logging
 import os
 import re
-import requests
+
 import ckanapi
-import csv
+import requests
 import slugify
 
 CONFIG_FILENAME = os.getenv('CONFIG_FILENAME', 'config.json')
@@ -94,7 +95,7 @@ def load_datasets(ckan, resources):
             dataset = {
                 'title': _create_title(resource['dataset']),
                 'name': resource['dataset_name'],
-                'type': 'oht',
+                'type': 'iht',
                 'owner_org': 'spectrum',
                 'private': True,
                 'notes': resource['notes'],
