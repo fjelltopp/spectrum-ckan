@@ -1,4 +1,4 @@
-FROM docker pull ghcr.io/fjelltopp/fjelltopp-base-images/ckan_base:master
+FROM ghcr.io/fjelltopp/fjelltopp-base-images/ckan_base:master
 
 USER root
 RUN rm -rf /usr/lib/ckan/*
